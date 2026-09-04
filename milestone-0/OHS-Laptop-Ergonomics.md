@@ -4,13 +4,10 @@
 **Issue Number:** #16  
 **Date:** 04/09/2026
 
----
 
 ## Goal
 
 Understand how to maintain a safe and ergonomic workspace while working on a laptop and develop habits that reduce strain and discomfort.
-
----
 
 ## Reflection
 
@@ -27,6 +24,8 @@ Avoid sitting in the same position for too long, avoid straining eyes too much a
 ### Focus Bear Micro Breaks
 
 I explored the **Micro Breaks** feature in Focus Bear through **Settings → Micro Breaks → Edit Habit**.
+
+![Focus Bear Micro Breaks](screenshots/micro-breaks.png)
 
 The feature allows a break interval to be set to determine how frequently reminders appear. A habit can also be assigned to each break. I set my habits to include **"Get up and stretch, look around"** and **"Go out and take a walk."**
 
