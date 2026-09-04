@@ -1,7 +1,7 @@
 # Data Privacy & Confidentiality
 
-**Milestone:** 0 
-**Issue Number:** #15
+**Milestone:** 0  
+**Issue Number:** #15  
 **Date:** 04/09/2026
 
 ## Goal
