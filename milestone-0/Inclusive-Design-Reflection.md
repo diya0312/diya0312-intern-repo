@@ -35,7 +35,7 @@ In digital spaces, some common challenges include:
 When designing for neurodivergent users, I should consider:
 
 - Reducing unnecessary cognitive load.
-- Avoiding overwhelming layouts and excessive notifications.
+- Avoiding overwhelming layouts, colours and excessive notifications.
 - Providing clear and predictable navigation.
 - Using simple and understandable language.
 - Allowing users to have some control over how they interact with the system.
@@ -51,16 +51,6 @@ I can make my communication more inclusive by:
 - Giving enough context when explaining a task.
 - Being patient when someone needs more time to process information.
 - Asking what would help instead of assuming what someone needs.
-
-### Supporting Neurodivergent Teammates
-
-In a professional setting, I can support neurodivergent teammates by:
-
-- Communicating expectations clearly.
-- Respecting different working and communication styles.
-- Being flexible where possible.
-- Avoiding unnecessary pressure or assumptions.
-- Making important information easy to find and understand.
 
 ### Common UX and Communication Pitfalls
 
@@ -113,12 +103,6 @@ For example:
 - Give users clear and simple ways to complete common actions.
 
 This could reduce the amount of effort users need to spend figuring out how the app works.
-
-### Supportive Response
-
-If a user said they were struggling to start a task, I would respond:
-
-> It's okay if you're finding the task difficult to start. You don't need to complete everything at once. Let's focus on the smallest step you can take right now. Even working on it for a few minutes is progress. Once you've started, you can decide what the next small step should be.
 
 ## What I Learned
 
