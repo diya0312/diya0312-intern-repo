@@ -1,4 +1,4 @@
-# User Manual for Diya Bhat
+# User Manual for Diya
 
 **Milestone:** 0  
 **Issue Number:** #12  
