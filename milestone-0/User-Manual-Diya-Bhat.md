@@ -8,7 +8,7 @@
 
 - I am working as a Backend Developer Intern at Focus Bear.
 - My main focus is learning, completing assigned tasks, researching relevant concepts, and contributing wherever I can.
-- My availability may vary due to university and placement activities, so I will communicate if this affects my availability or deadlines.
+- My availability may vary due to university activities, so I will communicate if this affects my availability or deadlines.
 
 ## How I Work Best
 
