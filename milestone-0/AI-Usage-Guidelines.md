@@ -1,7 +1,7 @@
 # AI Usage Guidelines
 
 **Milestone:** 0  
-**Issue Number:** #11 
+**Issue Number:** #11  
 **Date:** 09/09/2026
 
 ## Goal
