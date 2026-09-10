@@ -24,7 +24,7 @@ The schedule is flexible depending on my other commitments. I may work additiona
 
 ## Focus Bear Time Tracking
 
-I use Focus Bear to record my internship work sessions. This helps me track the time spent on internship tasks and maintain a record of my work while also focus when completing the onboarding tasks without any distractions.
+I use Focus Bear to record my internship work sessions. This helps me track the time spent on internship tasks and maintain a record of my work while also focus on completing the onboarding tasks without any distractions.
 
 ![Focus Bear focus log](screenshots/focus-log-sessions-1.png)
 
