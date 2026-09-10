@@ -1,6 +1,6 @@
 # Internship Time Plan
 
-**Internship:** Backend Developer Intern at Focus Bear  
+**Internship:** Backend Developer Intern
 **Start Date:** 31/08/2026  
 **End Date:** 24/10/2026  
 **Total Hours:** 80 hours  
