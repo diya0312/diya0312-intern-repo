@@ -1,8 +1,6 @@
 # Internship Time Plan
 
-**Internship:** Backend Developer Intern
-**Start Date:** 31/08/2026  
-**End Date:** 24/10/2026  
+**Internship:** Backend Developer Intern     
 **Total Hours:** 80 hours  
 **Planned Hours:** 10–15 hours per week  
 **Work Location:** Remote / Work from Home
