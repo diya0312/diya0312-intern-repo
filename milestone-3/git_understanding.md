@@ -291,3 +291,53 @@ I might stage changes without immediately committing when I want to:
 I learned that staging and committing are different steps. `git add` places selected changes into the staging area, while `git commit` records those staged changes in the repository history.
 
 The staging area is useful because it gives me control over which changes are included in a commit. I also learned how to check the current state using `git status` and how to unstage a file when I do not want it included in the next commit.
+
+---
+
+# Branching & Team Collaboration
+
+**Milestone:** 3  
+**Issue Number:** #58  
+**Date:** 14/09/2026
+
+## Why Do Teams Use Branches Instead of Pushing Directly to `main`?
+
+Branches allow developers to work on changes separately from the main codebase. This reduces the risk of unfinished or incorrect changes being added directly to `main`.
+
+Pushing directly to `main` can be problematic because it can introduce bugs or incomplete work into the shared branch. It can also make it harder for other team members to review changes before they become part of the main codebase.
+
+## What I Tested
+
+I created and worked on a separate branch called `git-bisect-practice` while working on my Git bisect exercise.
+
+The branch had its own commits while `main` remained a separate branch.
+
+![Branch and commit history](screenshots/branch-created.png)
+
+I made and committed the changes while working on the separate branch.
+
+![Commits on the branch](screenshots/branch-commits.png)
+
+I then switched back to `main` and checked the repository status. Git showed that I was on `main` and that the branch was clean and up to date.
+
+![Switching back to main](screenshots/branch-switch-main.png)
+
+## How Do Branches Help With Reviewing Code?
+
+Branches allow developers to work on a feature or fix without changing the main branch directly. The changes can then be reviewed before being integrated into `main`.
+
+This makes it easier for team members to inspect the changes, discuss them, suggest improvements, and identify problems before they become part of the main codebase.
+
+## What Happens If Two People Edit the Same File on Different Branches?
+
+If two people make changes to the same parts of a file on different branches, Git may not be able to automatically combine the changes. This can result in a merge conflict.
+
+The developers then need to review the conflicting changes and decide how they should be combined.
+
+I also experienced a real merge conflict earlier in Milestone 1, which helped me understand how Git handles conflicting changes between branches.
+
+## What I Learned
+
+I learned that branches provide a safer way to work on changes without directly affecting `main`. They allow developers to keep their work separate, make commits independently, and have changes reviewed before they are integrated into the main codebase.
+
+I also learned that working on separate branches does not automatically prevent conflicts. If multiple developers change the same part of a file, Git may require the conflicting changes to be resolved manually.
