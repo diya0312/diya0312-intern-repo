@@ -79,3 +79,83 @@ This is more useful because it is short and clearly describes the purpose of the
 - A very long message can make a simple change harder to understand.
 - A good commit message should clearly communicate the purpose of the change without unnecessary detail.
 - Looking at commit histories from real open-source projects helped me understand how meaningful messages are used in practice.
+
+---
+
+# Git Bisect
+
+**Issue Number:** #61
+
+## What Does `git bisect` Do?
+
+`git bisect` helps find the commit that introduced a bug by narrowing down the commit history between a known good and bad commit.
+
+I used the CLI to mark a working commit as good and the current buggy version as bad. Git then selected commits for me to test.
+
+## My Test Scenario
+
+I created a small Python program with an `add()` function.
+
+- The first version returned the correct results.
+- I added another test case in the second commit.
+- In the third commit, I intentionally changed `a + b` to `a - b`, introducing a bug.
+- I then made two more commits while the bug was still present.
+
+![Working version](screenshots/bisect-working-version.png)
+
+The buggy version produced `-1` and `1` instead of `5` and `9`.
+
+![Bug introduced](screenshots/bisect-bug-introduced.png)
+
+My five commits were:
+
+![Commit history](screenshots/bisect-commit-history.png)
+
+## How I Used `git bisect`
+
+I started bisecting with:
+
+`git bisect start`
+
+I marked the current version as bad:
+
+`git bisect bad`
+
+I marked `e01826b` as a known good commit:
+
+`git bisect good e01826b`
+
+Git selected `dc923ba` for testing. The program produced `-1` and `1`, so I marked it as bad.
+
+Git then selected `9c08664`. The program produced `5` and `9`, so I marked it as good.
+
+Git then identified:
+
+`dc923bae... is the first bad commit`
+
+The commit was `Change addition behavior`, which was the commit where I intentionally introduced the bug.
+
+![Git bisect result](screenshots/git-bisect-result.png)
+
+After finishing, I exited bisect mode using:
+
+`git bisect reset`
+
+## When Would I Use Git Bisect?
+
+I would use `git bisect` when a bug exists in the current version but I do not know which earlier commit introduced it.
+
+It is especially useful when a project has many commits and checking them manually would take a lot of time.
+
+## Git Bisect vs Manual Review
+
+- **Git bisect:** Narrows down the possible commits automatically and requires testing selected commits.
+- **Manual review:** Requires checking commits one by one.
+- `git bisect` is more efficient when there are many commits to investigate.
+
+## What I Learned
+
+- `git bisect` can help identify the commit that introduced a bug.
+- I learned how to mark commits as `good` or `bad`.
+- The accuracy of bisect depends on correctly testing and classifying each commit.
+- I also learned to use `git bisect reset` after finishing the investigation.
