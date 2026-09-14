@@ -231,3 +231,63 @@ I would use `git blame` when I need to understand the history of a particular li
 ## What I Learned
 
 I learned that these Git commands are useful for different situations rather than being interchangeable. Checkout can restore a specific file, cherry-pick can apply selected commits, `git log` helps explore repository history, and `git blame` helps trace changes to individual lines. Understanding when to use each command can make it easier to work with and investigate a larger codebase.
+
+---
+
+# Git Staging vs. Committing
+
+**Milestone:** 3  
+**Issue Number:** #57  
+**Date:** 14/09/2026
+
+## What Is the Difference Between Staging and Committing?
+
+Staging and committing are two separate steps in Git.
+
+**Staging** means selecting the changes that I want to include in the next commit. I used `git add` to move my test file into the staging area.
+
+**Committing** means permanently recording the staged changes in the repository's Git history. I used `git commit` to save the staged change as a commit.
+
+The basic flow is:
+
+**Working directory → Staging area → Repository**
+
+## What I Tested
+
+I created a temporary file called `staging-test.txt` and checked its status before staging it.
+
+![File before staging](screenshots/git-staging-before.png)
+
+I then used `git add` to stage the file and checked the status again. Git showed the file under changes to be committed.
+
+![File after staging](screenshots/git-staging-status.png)
+
+I then used `git reset HEAD -- staging-test.txt` to unstage the file. The file was no longer in the staging area.
+
+![File after unstaging](screenshots/git-unstaging-status.png)
+
+After staging the file again, I committed it using `git commit`. I then checked the repository status and confirmed that there were no remaining changes to commit.
+
+![File after committing](screenshots/git-commit-status.png)
+
+## Why Does Git Separate Staging and Committing?
+
+Git separates these steps so that I can choose exactly which changes should be included in a commit.
+
+This is useful when I have made several changes but only want to commit some of them. The staging area acts as a place where I can review and select the changes before creating a commit.
+
+## When Would I Want to Stage Changes Without Committing?
+
+I might stage changes without immediately committing when I want to:
+
+- Review exactly what will be included in the next commit.
+- Select only certain changes from a larger set of modifications.
+- Prepare a clean, focused commit.
+- Check the staged changes before recording them in Git history.
+- Wait until I have verified that the staged changes are ready to commit.
+
+## What I Learned
+
+I learned that staging and committing are different steps. `git add` places selected changes into the staging area, while `git commit` records those staged changes in the repository history.
+
+The staging area is useful because it gives me control over which changes are included in a commit. I also learned how to check the current state using `git status` and how to unstage a file when I do not want it included in the next commit.
