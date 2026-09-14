@@ -1,1 +1,2 @@
 Practicing different commit message styles.
+Added an example of an overly detailed commit message.
