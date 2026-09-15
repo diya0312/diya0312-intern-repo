@@ -85,3 +85,35 @@ The functionality remained the same, but the names now make the code easier to u
 Poorly named variables and functions can make code confusing and increase the time needed to understand, debug, or modify it. They can also make collaboration harder because another developer may not immediately understand what the code is supposed to do.
 
 Refactoring the names improved readability because the purpose of each variable and function became clear from the name itself. This showed me that meaningful naming is an important part of writing clean and maintainable code.
+
+---
+
+## Writing Small, Focused Functions
+
+**Milestone:** 4  
+**Issue Number:** #67      
+**Date:** 15/09/2026
+
+### Best Practices
+
+A good function should generally have one clear responsibility. Keeping functions small makes them easier to understand, test, debug, and modify. Functions should have clear names that describe what they do and should avoid handling several unrelated tasks at once.
+
+### Long Function Example
+
+I created an example function called `process_student_marks()` that calculated the total, average, highest mark, lowest mark, grade, and displayed the results. Although the function worked correctly, it handled several different responsibilities in one place.
+
+![Long function example](screenshots/long-function.png)
+
+### Refactored Version
+
+I divided the large function into smaller functions such as `calculate_total()`, `calculate_average()`, `find_highest()`, `find_lowest()`, `calculate_grade()`, and `display_results()`. Each function now has a specific responsibility.
+
+The refactored version produces the same output as the original version, but the structure is easier to understand, test, and maintain.
+
+![Focused functions example](screenshots/focused-functions.png)
+
+### Reflection
+
+Breaking a large function into smaller focused functions makes the code easier to understand and maintain. Each function can be understood and tested independently, and changes to one responsibility are less likely to affect unrelated parts of the code.
+
+The refactoring improved the structure by separating calculations, grade determination, and output into different functions. This made the overall code more organized and showed me why single-purpose functions are useful for clean code.
