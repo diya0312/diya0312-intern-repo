@@ -54,6 +54,10 @@ Clean code is not only about making code work. Clear naming, simple structure, c
 
 ## Naming Variables & Functions
 
+**Milestone:** 4  
+**Issue Number:** #66    
+**Date:** 15/09/2026
+
 ### Best Practices
 
 Good variable and function names should clearly describe what the value represents or what the function does. Names should be meaningful, specific, and easy to understand without needing extra explanation.
