@@ -117,3 +117,35 @@ The refactored version produces the same output as the original version, but the
 Breaking a large function into smaller focused functions makes the code easier to understand and maintain. Each function can be understood and tested independently, and changes to one responsibility are less likely to affect unrelated parts of the code.
 
 The refactoring improved the structure by separating calculations, grade determination, and output into different functions. This made the overall code more organized and showed me why single-purpose functions are useful for clean code.
+
+---
+
+## Avoiding Code Duplication
+
+**Milestone:** 4  
+**Issue Number:** #68        
+**Date:** 15/09/2026
+
+### DRY Principle
+
+DRY stands for "Don't Repeat Yourself". It means that the same logic should not be unnecessarily repeated in multiple places. Instead, repeated logic can be placed in a reusable function or another suitable structure.
+
+### Duplicated Code Example
+
+I created a small example in the test repository where the same formatting and calculation logic was repeated for two students. The repeated code made the program longer and meant that changes to the same logic would need to be made in multiple places.
+
+![Duplicated code example](screenshots/duplicated-code.png)
+
+### Refactored Version
+
+I refactored the repeated logic into a reusable function. The function can now be called for different students instead of repeating the same code.
+
+The output remains the same, but the code is shorter and easier to maintain because the logic exists in one place.
+
+![Refactored code example](screenshots/dry-refactored.png)
+
+### Reflection
+
+Duplicated code can make a program harder to maintain because the same logic may need to be updated in multiple places. It can also increase the chance of inconsistencies if one copy is changed while another is not.
+
+Refactoring the duplicated code improved maintainability by putting the common logic in one reusable function. If the logic needs to change later, it can be updated in one place instead of several copies.
