@@ -152,6 +152,36 @@ Refactoring the duplicated code improved maintainability by putting the common l
 
 ---
 
+## Refactoring Code for Simplicity
+
+**Milestone:** 4        
+**Issue Number:** #69            
+**Date:** 16/09/2026
+
+### Common Refactoring Techniques
+
+Common refactoring techniques include simplifying conditional logic, removing unnecessary variables or steps, extracting repeated logic into functions, improving names, and removing unnecessary complexity while keeping the same behaviour.
+
+### Overly Complicated Example
+
+I created a small example that determines whether a number is positive, negative, or zero. The original version used unnecessary variables, nested conditions, and extra steps for a simple decision.
+
+![Overly complicated code](screenshots/complex-code.png)
+
+### Refactored Version
+
+I simplified the logic by removing unnecessary variables and nested conditions while keeping the same functionality. The refactored version is shorter and easier to understand.
+
+![Simplified code](screenshots/simple-code.png)
+
+### Reflection
+
+The original code was more complex than necessary because it used extra variables, unnecessary nesting, and multiple steps to perform a simple decision.
+
+Refactoring improved the code by making the logic more direct and readable. The simplified version is easier to understand and maintain while producing the same results as the original.
+
+---
+
 ## Commenting & Documentation
 
 **Milestone:** 4    
