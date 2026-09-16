@@ -1,0 +1,10 @@
+module.exports = [
+    {
+        files: ["**/*.js"],
+        rules: {
+            "no-var": "error",
+            "prefer-const": "error",
+            "no-unused-vars": "error"
+        }
+    }
+]

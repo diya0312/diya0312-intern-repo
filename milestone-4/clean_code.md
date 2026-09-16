@@ -52,6 +52,49 @@ Clean code is not only about making code work. Clear naming, simple structure, c
 
 ---
 
+## Code Formatting & Style Guides
+
+**Milestone:** 4    
+**Issue Number:** #65    
+**Date:** 16/09/2026
+
+### Importance of Consistent Code Style
+
+Consistent code formatting makes code easier to read, review, and maintain. Following a common style also reduces unnecessary differences between files and makes it easier for developers to understand code written by others.
+
+### Airbnb JavaScript Style Guide
+
+I reviewed the Airbnb JavaScript Style Guide to understand commonly recommended JavaScript style practices. The guide provides conventions for areas such as variables, functions, objects, arrays, naming, whitespace, and other JavaScript syntax.
+
+![Airbnb JavaScript Style Guide](screenshots/airbnb-style-guide.png)
+
+
+### ESLint and Prettier
+
+- **ESLint** is a JavaScript linter that checks code against configured rules and reports potential problems or style violations.
+- **Prettier** is a code formatter that automatically applies consistent formatting to supported source files.
+- ESLint and Prettier serve different purposes, but they can be used together to improve consistency and code quality.
+
+For this exercise, I installed and configured ESLint and Prettier and ran them on a small JavaScript example created specifically for the activity.
+
+### Linting and Formatting
+
+The original example contained inconsistent formatting and JavaScript style issues. ESLint was used to identify code-quality problems, while Prettier was used to automatically format the code.
+
+![Before formatting and linting](screenshots/formatting-before.png)
+
+After applying the formatter and fixing the reported issues, the code became more consistent and easier to read.
+
+![After formatting and linting](screenshots/formatting-after.png)
+
+### Reflection
+
+Consistent formatting is important because it improves readability and makes code easier to review and maintain. It also reduces distractions caused by inconsistent indentation, spacing, and syntax.
+
+The linter helped identify issues that might otherwise be overlooked, while Prettier automatically handled much of the formatting. After formatting and fixing the issues, the code was easier to read and more consistent.
+
+---
+
 ## Naming Variables & Functions
 
 **Milestone:** 4  
