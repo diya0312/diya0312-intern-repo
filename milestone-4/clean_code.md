@@ -183,3 +183,37 @@ Comments are useful when they explain why something is done, provide important c
 Comments should be avoided when they simply repeat what the code already says. In those cases, improving the variable names, function names, or structure of the code is usually more useful than adding more comments.
 
 This activity showed me that good comments should add information rather than duplicate the code.
+
+---
+
+## Handling Errors & Edge Cases
+
+**Milestone:** 4      
+**Issue Number:** #71          
+**Date:** 16/09/2026
+
+### Error Handling and Edge Cases
+
+Robust code should consider invalid inputs and unexpected situations instead of assuming that every input will be valid. Common strategies include validating inputs, using exceptions where appropriate, returning clear error information, and handling important edge cases.
+
+### Guard Clauses
+
+A guard clause checks for an invalid or exceptional condition early and returns or raises an error immediately. This keeps the main logic less nested and easier to read.
+
+### Original Example
+
+I created a small function that performs division without checking for invalid input. The original function could raise an error when the denominator was zero or when invalid values were provided.
+
+![Original error handling example](screenshots/error-handling-before.png)
+
+### Refactored Version
+
+I added input validation and guard clauses to handle invalid values before performing the division. The refactored version provides clear error messages for invalid inputs while allowing valid calculations to continue normally.
+
+![Refactored error handling example](screenshots/error-handling-after.png)
+
+### Reflection
+
+The original code assumed that all inputs were valid, which could cause the program to terminate unexpectedly when an edge case such as division by zero occurred.
+
+Handling errors improves reliability because invalid inputs are handled explicitly instead of causing unexpected failures. The refactored version also makes the expected behavior clearer and gives more useful feedback when an invalid input is provided.
