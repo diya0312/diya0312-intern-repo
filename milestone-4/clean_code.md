@@ -247,3 +247,41 @@ I added input validation and guard clauses to handle invalid values before perfo
 The original code assumed that all inputs were valid, which could cause the program to terminate unexpectedly when an edge case such as division by zero occurred.
 
 Handling errors improves reliability because invalid inputs are handled explicitly instead of causing unexpected failures. The refactored version also makes the expected behavior clearer and gives more useful feedback when an invalid input is provided.
+
+---
+
+## Writing Unit Tests for Clean Code
+
+**Milestone:** 4        
+**Issue Number:** #72            
+**Date:** 16/09/2026
+
+### Importance of Unit Testing
+
+Unit tests verify that individual functions behave as expected. They help detect regressions when code is changed and provide confidence that existing functionality continues to work.
+
+Unit tests also encourage clear and focused functions because smaller functions are easier to test independently.
+
+### Testing Framework
+
+For this exercise, I used Python's built-in `unittest` framework. I chose it because it is included with Python and provides a simple way to organize and run tests without installing an additional package.
+
+### Unit Test Example
+
+I created a small `calculate_average()` function and wrote unit tests for normal input, a single value, and empty input.
+
+![Unit tests passing](screenshots/unit-tests-passing.png)
+
+### Testing Issues
+
+While testing the function, I identified that an empty list could cause a division-by-zero error. I handled this case explicitly by returning `0` when no values are provided.
+
+I then added a test for the empty-list case to make sure the function behaves correctly for that edge case.
+
+![Unit tests including edge case](screenshots/unit-tests-edge-case.png)
+
+### Reflection
+
+Unit tests help keep code clean by making expected behaviour explicit and making it easier to detect problems after changes. They also encourage functions to have clear responsibilities and predictable outputs.
+
+The main issue I found while testing was the empty-list edge case, which could cause a division-by-zero error. Adding explicit handling and a test for this case made the function more reliable and ensured that the edge case would be checked automatically in the future.
