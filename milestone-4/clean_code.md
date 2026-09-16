@@ -149,3 +149,37 @@ The output remains the same, but the code is shorter and easier to maintain beca
 Duplicated code can make a program harder to maintain because the same logic may need to be updated in multiple places. It can also increase the chance of inconsistencies if one copy is changed while another is not.
 
 Refactoring the duplicated code improved maintainability by putting the common logic in one reusable function. If the logic needs to change later, it can be updated in one place instead of several copies.
+
+---
+
+## Commenting & Documentation
+
+**Milestone:** 4    
+**Issue Number:** #70        
+**Date:** 16/09/2026
+
+### Best Practices
+
+Comments should explain information that is not obvious from the code, such as why a particular approach was chosen, an important assumption, or a non-obvious piece of logic. Good documentation should help other developers understand how to use or maintain the code.
+
+Comments should be kept clear, concise, and up to date with the code.
+
+### Poorly Commented Example
+
+I created a small Python example containing comments that only describe what the code is already doing. For example, comments such as "add 1 to total" or "loop through numbers" do not provide useful information because the code itself already makes these actions clear.
+
+![Poorly commented code](screenshots/poor-comments.png)
+
+### Improved Comments
+
+I rewrote the comments so that they explain the reason behind the logic rather than simply repeating the code. The improved comments provide useful context while leaving straightforward operations self-explanatory.
+
+![Improved comments](screenshots/useful-comments.png)
+
+### Reflection
+
+Comments are useful when they explain why something is done, provide important context, document assumptions, or clarify non-obvious logic. They can also be useful for explaining constraints or decisions that may not be clear from the code itself.
+
+Comments should be avoided when they simply repeat what the code already says. In those cases, improving the variable names, function names, or structure of the code is usually more useful than adding more comments.
+
+This activity showed me that good comments should add information rather than duplicate the code.
