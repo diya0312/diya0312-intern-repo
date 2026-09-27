@@ -1,0 +1,2 @@
+npx markdownlint-cli2 "milestone-4/**/*.md"
+npx cspell "milestone-4/**/*.md"

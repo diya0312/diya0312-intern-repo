@@ -54,8 +54,8 @@ Clean code is not only about making code work. Clear naming, simple structure, c
 
 ## Code Formatting & Style Guides
 
-**Milestone:** 4    
-**Issue Number:** #65    
+**Milestone:** 4
+**Issue Number:** #65
 **Date:** 16/09/2026
 
 ### Importance of Consistent Code Style
@@ -67,7 +67,6 @@ Consistent code formatting makes code easier to read, review, and maintain. Foll
 I reviewed the Airbnb JavaScript Style Guide to understand commonly recommended JavaScript style practices. The guide provides conventions for areas such as variables, functions, objects, arrays, naming, whitespace, and other JavaScript syntax.
 
 ![Airbnb JavaScript Style Guide](screenshots/airbnb-style-guide.png)
-
 
 ### ESLint and Prettier
 
@@ -98,7 +97,7 @@ The linter helped identify issues that might otherwise be overlooked, while Pret
 ## Naming Variables & Functions
 
 **Milestone:** 4  
-**Issue Number:** #66    
+**Issue Number:** #66
 **Date:** 15/09/2026
 
 ### Best Practices
@@ -134,7 +133,7 @@ Refactoring the names improved readability because the purpose of each variable 
 ## Writing Small, Focused Functions
 
 **Milestone:** 4  
-**Issue Number:** #67      
+**Issue Number:** #67
 **Date:** 15/09/2026
 
 ### Best Practices
@@ -166,7 +165,7 @@ The refactoring improved the structure by separating calculations, grade determi
 ## Avoiding Code Duplication
 
 **Milestone:** 4  
-**Issue Number:** #68        
+**Issue Number:** #68
 **Date:** 15/09/2026
 
 ### DRY Principle
@@ -197,8 +196,8 @@ Refactoring the duplicated code improved maintainability by putting the common l
 
 ## Refactoring Code for Simplicity
 
-**Milestone:** 4        
-**Issue Number:** #69            
+**Milestone:** 4
+**Issue Number:** #69
 **Date:** 16/09/2026
 
 ### Common Refactoring Techniques
@@ -227,8 +226,8 @@ Refactoring improved the code by making the logic more direct and readable. The 
 
 ## Commenting & Documentation
 
-**Milestone:** 4    
-**Issue Number:** #70        
+**Milestone:** 4
+**Issue Number:** #70
 **Date:** 16/09/2026
 
 ### Best Practices
@@ -261,8 +260,8 @@ This activity showed me that good comments should add information rather than du
 
 ## Handling Errors & Edge Cases
 
-**Milestone:** 4      
-**Issue Number:** #71          
+**Milestone:** 4
+**Issue Number:** #71
 **Date:** 16/09/2026
 
 ### Error Handling and Edge Cases
@@ -295,8 +294,8 @@ Handling errors improves reliability because invalid inputs are handled explicit
 
 ## Writing Unit Tests for Clean Code
 
-**Milestone:** 4        
-**Issue Number:** #72            
+**Milestone:** 4
+**Issue Number:** #72
 **Date:** 16/09/2026
 
 ### Importance of Unit Testing
