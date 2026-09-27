@@ -1,0 +1,31 @@
+{
+  "version": "0.2",
+  "language": "en,en-GB",
+  "files": [
+    "milestone-4/**/*.md"
+  ],
+  "ignorePaths": [
+    "**/node_modules/**"
+  ],
+  "words": [
+    "Airbnb",
+    "CLI",
+    "CICD",
+    "CSS",
+    "DRY",
+    "ESLint",
+    "GitHub",
+    "JavaScript",
+    "markdownlint",
+    "NestJS",
+    "NodeJS",
+    "npm",
+    "Prettier",
+    "QoS",
+    "refactor",
+    "refactored",
+    "Simulink",
+    "TypeScript",
+    "behaviour"
+  ]
+}
