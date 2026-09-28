@@ -1,4 +1,8 @@
-# Git Knowledge
+# Git Knowledge  
+
+**Milestone:** 2      
+**Issue Number:** #49          
+**Date:** 28/09/2026    
 
 ## Git Installation
 
