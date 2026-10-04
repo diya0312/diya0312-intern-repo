@@ -1,8 +1,9 @@
 # NestJS BullMQ & Redis  
 
-**Milestone:** 7    
-**Issue Number:** #24    
-**Date:** 28/09/2026  
+**Milestone:** 7      
+**Issue Number:** #24      
+**Date:** 04/10/2026  
+
 ## BullMQ
 
 - BullMQ is a job queue system built on Redis.
