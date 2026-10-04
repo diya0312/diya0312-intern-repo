@@ -4,6 +4,8 @@ import {
   NestModule,
 } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { BullModule } from '@nestjs/bullmq';
+import { BackgroundJobModule } from './background-jobs/background-job.module';
 import { AppController } from './app.controller';
 import { TypeormTasksModule } from './typeorm-tasks/typeorm-tasks.module';
 import { AppService } from './app.service';
@@ -23,6 +25,13 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
       autoLoadEntities: true,
       synchronize: false,
     }),
+    BullModule.forRoot({
+  connection: {
+    host: 'localhost',
+    port: 6379,
+   },
+   }),
+    BackgroundJobModule,
     TasksModule,
     CliDemoModule,
     TypeormTasksModule,
