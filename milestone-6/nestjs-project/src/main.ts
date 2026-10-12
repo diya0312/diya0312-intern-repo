@@ -1,4 +1,6 @@
-﻿import { ValidationPipe } from '@nestjs/common';
+﻿import { rateLimit } from 'express-rate-limit';
+import helmet from 'helmet';
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
@@ -7,6 +9,21 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.use(helmet());
+
+  app.use(
+    rateLimit({
+      windowMs: 15 * 60 * 1000,
+      limit: 100,
+      standardHeaders: 'draft-8',
+      legacyHeaders: false,
+      message: {
+        statusCode: 429,
+        message: 'Too many requests, please try again later.',
+      },
+    }),
+  );
 
   app.useLogger(app.get(Logger));
 
@@ -23,3 +40,4 @@ async function bootstrap() {
 }
 
 bootstrap();
+
