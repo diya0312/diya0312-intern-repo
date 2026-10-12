@@ -1,8 +1,8 @@
 ﻿# NestJS Role-Based Authorization (RBAC)
 
-**Milestone:** 8    
-**Issue Number:** #30    
-**Date:** 11/10/2026    
+**Milestone:** 8  
+**Issue Number:** #30  
+**Date:** 11/10/2026
 
 ## Objective
 
@@ -44,14 +44,19 @@ The `/admin` endpoint was tested using PowerShell.
 - Request without an access token returned `401 Unauthorized`.
 - Request with an invalid token returned `401 Unauthorized`.
 - Request with a valid Client Credentials token without the required `admin` role returned `403 Forbidden`.
-- Successful access using a token containing the required `admin` role has not yet been verified.
+- Request using an Auth0 user access token containing the `admin` role returned `200 OK`.
+- The successful response was `{"message":"Welcome, admin!"}`.
 
 ![NestJS RBAC test results](screenshots/nestjs-rbac-test-results.png)
+
+![Successful admin-authorized request](screenshots/nestjs-rbac-admin-success.png)
+
+![Auth0 login callback completed](screenshots/nestjs-rbac-login-completed.png)
 
 ## Reflection
 
 - Auth0 can manage roles and include role information in access tokens using a Post-Login Action.
-- The NestJS guard verifies the access token before checking the required role.
-- The tests demonstrated the difference between `401 Unauthorized` and `403 Forbidden`.
-- The Client Credentials token represented an application and did not contain the required `admin` role claim.
-- A successful request using a token containing the assigned `admin` role still needs to be verified.
+- The NestJS guard verifies the access token's signature, issuer, and audience before checking the required role.
+- The tests demonstrated the difference between `401 Unauthorized` for missing or invalid authentication and `403 Forbidden` when an authenticated request lacks the required role.
+- The Client Credentials token represented an application and did not contain the required `admin` role claim, so access was correctly denied.
+- The final user-login test confirmed that an access token containing the `admin` role was accepted and the protected `/admin` endpoint returned `200 OK`.
