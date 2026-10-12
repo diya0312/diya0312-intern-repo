@@ -1,4 +1,5 @@
-﻿import {
+﻿import { EncryptedData } from './encryption/encrypted-data.entity';
+import {
   MiddlewareConsumer,
   Module,
   NestModule,
@@ -40,6 +41,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_DATABASE: Joi.string().default('nestjs_demo'),
+        ENCRYPTION_KEY: Joi.string().hex().length(64).required(),
       }),
     }),
     // Application-level PostgreSQL connection using TypeORM.
@@ -62,6 +64,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
       },
     }),
 
+    TypeOrmModule.forFeature([EncryptedData]),
     BackgroundJobModule,
     TasksModule,
     CliDemoModule,
@@ -75,4 +78,6 @@ export class AppModule implements NestModule {
     consumer.apply(LoggingMiddleware).forRoutes('*');
   }
 }
+
+
 
