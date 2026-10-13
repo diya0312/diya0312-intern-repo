@@ -2,7 +2,7 @@
 
 **Milestone:** 8  
 **Issue Number:** #29  
-**Date:** 11/10/2026
+**Date:** 13/10/2026
 
 ## Implementation
 
@@ -49,6 +49,20 @@
 ![Git ignoring the local environment file](screenshots/nestjs-env-gitignore.png)
 
 ![Missing required environment variable validation test](screenshots/nestjs-env-config-test.png)
+
+![Joi validation failure before database connection](screenshots/nestjs-env-validation-failure.png)
+
+## Additional Validation Evidence
+
+### Testing invalid environment configuration
+
+The application's environment validation was tested by temporarily setting `PORT` to an invalid value before starting NestJS.
+
+Joi rejected the invalid value during configuration initialization, reporting that `PORT` must be a number. The application stopped before attempting to establish a PostgreSQL connection.
+
+### Verification Result
+
+This test confirms that Joi rejects invalid environment configuration during application initialization rather than allowing the application to proceed to database connection attempts.
 
 ## Reflection
 
