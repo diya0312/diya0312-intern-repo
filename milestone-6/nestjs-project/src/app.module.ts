@@ -44,7 +44,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
         ENCRYPTION_KEY: Joi.string().hex().length(64).required(),
       }),
     }),
-    // Application-level PostgreSQL connection using TypeORM.
+    // Application-level PostgreSQL connection for the running NestJS app; separate from the migration CLI DataSource.
     TypeOrmModule.forRoot({
   type: 'postgres',
   host: process.env.DB_HOST ?? 'localhost',
