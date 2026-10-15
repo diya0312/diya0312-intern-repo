@@ -80,8 +80,18 @@ Background task
 
 ## Reflection
 
-- BullMQ separates background processing from normal API request handling.
-- Redis provides persistent queue storage and allows producers and workers to communicate through the queue.
-- Workers process jobs asynchronously and move successful jobs to completed state.
-- Failed jobs can be retried using configured attempts and backoff settings.
-- In a Focus Bear-style backend, BullMQ can be useful for tasks such as notifications, analytics processing, and synchronization that should not block the user-facing API.
+- **Why is BullMQ used instead of handling tasks directly in API requests?**
+  - BullMQ runs time-consuming tasks in the background, allowing the API to respond quickly without waiting for the task to finish.
+
+- **How does Redis help manage job queues in BullMQ?**
+  - Redis stores job information and helps BullMQ queues and workers communicate. It also helps retain queued job data across application restarts, depending on Redis persistence settings.
+
+- **What happens if a job fails? How can failed jobs be retried?**
+  - BullMQ marks the job as failed and can retry it using the `attempts` option. Backoff settings can add a delay between retries.
+
+- **How would Focus Bear use BullMQ for background tasks?**
+  - Focus Bear could use BullMQ for tasks such as sending notifications, processing analytics, generating reports, and syncing data without blocking the API.
+
+- **Personal observations:**
+  - During testing, I observed that the API returned a job ID before the background task finished processing.
+  - I also learned how retries help handle temporary failures and why retry limits are useful.
