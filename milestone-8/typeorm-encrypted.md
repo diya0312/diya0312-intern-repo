@@ -62,9 +62,10 @@ The test stored a sample value, inspected the raw database value, retrieved the 
 
 ![Encryption and decryption test output](screenshots/typeorm-encrypted-roundtrip.png)
 
-## Dependency Compatibility Note
+The installed dependency versions were corrected to typeorm@0.3.31, typeorm-encrypted@0.8.0, and @nestjs/typeorm@12.0.2. The npm ls output shows the packages resolving to TypeORM 0.3.31 without the previous invalid peer-dependency warning. The NestJS build was started after correcting the TypeORM version. The screenshot below records the dependency tree and the start of the build command; it does not, by itself, show that the build completed successfully.
 
-The installed `typeorm-encrypted` version declares a peer dependency on TypeORM `^0.3.7`, while this project uses TypeORM `1.1.x`. Installation with `--legacy-peer-deps` bypasses npm's peer-dependency check but does not establish official compatibility. The build and runtime test results must be verified, and this dependency compatibility issue should be resolved before treating the implementation as production-ready.
+![Dependency version and build verification](screenshots/typeorm-encrypted-dependency-build.png)
+
 
 ## Reflection
 
