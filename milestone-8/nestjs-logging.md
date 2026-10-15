@@ -63,7 +63,7 @@
 - Sent a request to the protected `/admin` endpoint without an authorization token to test error handling.
 - Inspected the server logs for request information and structured error details.
 
-**Test results:** Replace this line with the actual build and HTTP test results before committing the report.
+**Test results:**
 
 ![Successful build](screenshots/nestjs-logging-build.png)
 
