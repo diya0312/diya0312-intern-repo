@@ -1,103 +1,112 @@
-﻿# Mocking Dependencies & Database Interactions in NestJS
+﻿# Mocking Dependencies & Database Interactions in NestJS  
 
-- **Milestone:** 9
-- **Issue:** #21
-- **Date:** 18/10/2026
+**Milestone:** 9  
+**Issue Number:** #21  
+**Date:** 18/10/2026  
 
-## Objective
+## What I Did
 
-- Learn how to mock dependencies in NestJS tests.
-- Understand how `@nestjs/testing` configures mock providers.
-- Learn how a TypeORM repository can be mocked in a service test.
-- Understand the differences between `jest.fn()` and `jest.spyOn()`.
+- Worked in my NestJS project (`milestone-6/nestjs-project`).
+- Rewrote `src/tasks/tasks.controller.spec.ts` to test the controller with a **mocked `TasksService`**.
+- Added a **`jest.spyOn()`** example in the same file, using the real `TasksService`.
+- Created `src/typeorm-tasks/typeorm-tasks.service.spec.ts` to test the service with a **mocked TypeORM repository** using `getRepositoryToken()`.
+- Ran the tests with Jest. **15 tests passed.**
 
-## 1. Why Mock Dependencies?
+## How Mocking Works in NestJS
 
-- Mocking replaces a real dependency with a controlled test version.
-- It helps test one component without relying on other components or external services.
-- Mocked dependencies can return predictable values or simulate errors.
-- This makes unit tests faster, more reliable, and easier to run repeatedly.
+- `Test.createTestingModule()` from `@nestjs/testing` builds a small NestJS module just for the test.
+- Inside it, any provider can be swapped for a fake version using `{ provide: Token, useValue: mock }`.
+- The class being tested still uses dependency injection as usual, but it receives the mock instead of the real dependency.
+- `jest.mock('path')` can also replace a whole imported module. In NestJS, swapping providers is usually simpler because DI already gives us a place to plug in the mock.
 
-## 2. Mocking a Service in a Controller Test
+## Mocking a Service in a Controller Test
 
-- A controller often depends on a service to perform application logic.
-- A controller unit test can provide a mock service instead of the real service.
-- The mock can be registered as a provider in `Test.createTestingModule()`.
-- The controller can then be tested without running the service's real implementation.
-- Jest mock functions can be used to configure return values and check whether methods were called.
+- `TasksController` depends on `TasksService`.
+- I created `mockTasksService`, where every method is a `jest.fn()`.
+- I registered it with `{ provide: TasksService, useValue: mockTasksService }`.
+- `jest.clearAllMocks()` runs before each test so call counts don't leak between tests.
 
-![Mock service in controller test](screenshots/nestjs-mocking-controller-service.png)
+![Controller test with a mocked TasksService](screenshots/nestjs-mocking-controller-mock-service.png)
 
-- This screenshot should show the actual controller test and its configured mock provider.
+- **What the controller tests check:**
+  - `getTasks()` returns exactly what the mock returns, and the mock is called once.
+  - `getTask(7)` passes `7` to `service.getTask`.
+  - `createTask({ title })` sends **only the title** to `service.createTask`.
+  - `updateTask(1, { title })` passes both the id and the new title.
+  - `deleteTask(99)` returns `undefined` when the service can't find the task.
+- Each test checks **what the controller sends to the service** (`toHaveBeenCalledWith`) and **what it returns** (`toEqual`), not just that the controller exists.
 
-## 3. Mocking a TypeORM Repository in a Service Test
+## `jest.fn()` vs `jest.spyOn()`
 
-- A service may use a TypeORM repository to read or modify database records.
-- A unit test can replace the real repository with a mock object.
-- NestJS provides `getRepositoryToken()` to identify the repository provider for an entity.
-- The test module can register a mock repository using that token.
-- Repository methods such as `find`, `findOne`, `save`, or `delete` can be mocked when the service uses them.
-- The mock should contain the methods required by the service being tested.
-- This approach avoids connecting to a real database during a unit test.
+- **`jest.fn()`**
+  - Creates a brand-new fake function that has no real code behind it.
+  - Used above to build the whole mock `TasksService`.
+  - Best when the real dependency should not run at all, e.g. a database or external API.
+- **`jest.spyOn(object, 'method')`**
+  - Wraps a method on a **real** object.
+  - By default the real code still runs, and Jest records how the method was called.
+  - It can also be overridden for one test with `.mockReturnValue()`.
+  - `jest.restoreAllMocks()` puts the original method back after each test.
 
-![Mock TypeORM repository](screenshots/nestjs-mocking-typeorm-repository.png)
+![jest.spyOn on the real TasksService](screenshots/nestjs-mocking-spyon.png)
 
-- This screenshot should show the actual service test and repository mock setup.
+- **My two `spyOn` tests:**
+  - **Spy only:** spied on `service.createTask`, then called the controller. The spy confirmed it was called with `'Spied task'`, and the **real** service still ran, so the new task got the real next id (`3`).
+  - **Spy + replace:** `jest.spyOn(service, 'getTasks').mockReturnValue([])` replaced the real method for just that test, so the controller returned `[]`.
 
-## 4. `jest.fn()` vs `jest.spyOn()`
+## Mocking a TypeORM Repository in a Service Test
 
-- `jest.fn()` creates a standalone mock function.
-- It is useful when creating a mock dependency or defining a function's test behaviour.
-- `jest.spyOn(object, 'method')` creates a spy on an existing method of an object.
-- A spy can help check whether a method was called and with which arguments.
-- A spy calls the original method by default unless its implementation is replaced.
-- Use `mockImplementation()` or `mockResolvedValue()` when the test needs controlled behaviour.
-- Restore spies after tests when necessary to prevent one test from affecting another.
+- `TypeormTasksService` uses `@InjectRepository(DatabaseTask)` to get a `Repository<DatabaseTask>`.
+- `getRepositoryToken(DatabaseTask)` returns the **same token** NestJS uses for that repository, so I can swap in my own mock.
+- The mock only has the repository methods the service actually uses: `create`, `save`, `find`, `findOneBy` and `remove`, each a `jest.fn()`.
+- No database connection is needed. These tests ran without Postgres.
 
-## 5. Running the Tests
+![Service test with getRepositoryToken and a mocked repository](screenshots/nestjs-mocking-repository-token.png)
 
-- Jest runs the test files and reports which test cases pass or fail.
-- Tests should be checked against the actual terminal output.
-- A passing unit test confirms the behaviour covered by that test; it does not prove that every application scenario works.
-- The screenshot below should contain the real test output from this project.
+- **What the service tests check:**
+  - `create()` calls `repository.create({ title })`, then `repository.save()` with that entity.
+  - `findAll()` returns what `repository.find()` resolves.
+  - `findOne(5)` calls `findOneBy({ id: 5 })`.
+  - `update()` changes the title and saves, but returns `undefined` and **does not call `save`** when the task is missing.
+  - `remove()` deletes the task, but returns `undefined` and **does not call `remove`** when the task is missing.
+  - A database error (`mockRejectedValue`) is passed back up to the caller.
 
-![Jest test results](screenshots/nestjs-mocking-jest-results.png)
+## Test Results
 
-## 6. Reflection
+- Command: `npm test -- --verbose src/tasks/tasks.controller.spec.ts src/typeorm-tasks`
+- **Result: 2 test suites passed, 15 tests passed.**
+  - 5 tests: controller with mocked service
+  - 2 tests: `jest.spyOn` examples
+  - 8 tests: service with mocked TypeORM repository
+
+![Jest results for the mocking tests](screenshots/nestjs-mocking-test-results.png)
+
+- **Note:** NestJS 12 is ESM-only, so I updated the `test` scripts in `package.json` to run Jest with `node --experimental-vm-modules`. In ESM mode, `jest` is imported from `@jest/globals`.
+
+## Reflection
 
 ### Why is mocking important in unit tests?
 
-- Mocking isolates the component being tested from its dependencies.
-- It makes tests faster and reduces dependence on databases, network services, and other external systems.
-- It allows predictable results and makes it easier to test error conditions.
+- It tests **one class at a time**. If a controller test fails, the problem is in the controller, not in the service or database.
+- Tests run fast: my 15 tests finished in about 2 seconds with no database running.
+- It makes hard cases easy to test, like "task not found" or "database connection lost", just by changing what the mock returns.
 
-### How do you mock a NestJS provider, such as a service in a controller test?
+### How do you mock a NestJS provider (e.g. a service in a controller test)?
 
-- Create a mock object or Jest mock functions for the methods the controller calls.
-- Register the mock in `Test.createTestingModule()` using the provider token for the dependency.
-- Retrieve the controller from the compiled testing module and test its behaviour.
-- Verify the returned result and, where appropriate, whether the mock methods were called.
+- Create an object with `jest.fn()` for each method the controller uses.
+- Register it in `Test.createTestingModule()` with `{ provide: TasksService, useValue: mockTasksService }`.
+- In each test, set the return value (`mockReturnValue`), call the controller, then assert the result **and** the call (`toHaveBeenCalledWith`).
 
 ### What are the benefits of mocking the database instead of using a real one?
 
-- Tests can run without starting or connecting to a database.
-- They are generally faster and easier to repeat.
-- Test data and repository responses can be controlled.
-- Database setup and cleanup are not required for these isolated unit tests.
-- However, repository mocks do not verify real SQL queries, database constraints, or actual database integration. Those need suitable integration tests.
+- No Postgres, Docker or migrations needed to run the tests.
+- Tests are fast and give the same result every run, with no leftover data.
+- Edge cases like `null` results and errors are easy to simulate.
+- **Limit:** a mocked repository doesn't check real SQL, column names or constraints. That still needs integration tests against a real database.
 
-### How do you decide what to mock versus what to test directly?
+### How do you decide what to mock vs. what to test directly?
 
-- Test the component's own logic directly.
-- Mock external dependencies that are outside the component's responsibility, such as repositories, external APIs, or services called by a controller.
-- Keep the mock behaviour relevant to the scenario being tested.
-- Use integration tests when the goal is to verify that multiple real components work together.
-- Avoid mocking the exact behaviour that the test is supposed to verify.
-
-## 7. Conclusion
-
-- Mocking helps isolate NestJS services and controllers during unit testing.
-- `@nestjs/testing` can register mock providers in a testing module.
-- TypeORM repository tokens can be used to supply repository mocks.
-- `jest.fn()` creates mock functions, while `jest.spyOn()` observes or replaces an existing method.
-- Actual test results should be recorded from the terminal, and database integration should be tested separately when required.
+- **Test directly:** the class's own logic, e.g. the service's "if task not found, return undefined" check.
+- **Mock:** things outside the class, such as repositories, other services, queues and external APIs.
+- **Use `spyOn`** when I want the real code to run but still check that it was called correctly.
+- **Never mock the thing being tested.** Otherwise the test only proves the mock works.
