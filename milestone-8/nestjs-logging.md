@@ -73,6 +73,32 @@
 
 ![Installed logging dependencies](screenshots/nestjs-logging-dependencies.png)
 
+## Unexpected Error (500) Test
+
+- The `401` test above covers a known `HttpException`. I also needed to test an **unexpected** error, the kind of bug the app doesn't plan for.
+- I added a test route, `GET /error-test`, that throws a plain JavaScript `Error` (not an `HttpException`) to simulate an unexpected failure.
+
+![Error test route throwing a plain Error](screenshots/nestjs-logging-error-test-route.png)
+
+- **How I tested it:** ran the app with `npm run start:prod` and called the route with `curl.exe -i http://localhost:3000/error-test`.
+- **Response the client received:**
+  - Status: `HTTP/1.1 500 Internal Server Error`
+  - Body: `{"statusCode":500,"timestamp":"...","path":"/error-test","message":"Internal server error"}`
+  - It uses the same JSON format as the `401` response, so error responses stay consistent.
+  - The real error message (`Simulated unexpected database failure`) is **not** sent to the client, so internal details stay hidden.
+
+![500 Internal Server Error response](screenshots/nestjs-logging-500-response.png)
+
+- **Structured error log on the server:** I saved the server output to a log file and pulled out the error entry. It contained:
+  - `level: 50`, which is Pino's `error` level
+  - `context: HttpExceptionFilter`, showing the global filter caught the error
+  - `method: GET`, `path: /error-test`, `statusCode: 500`
+  - `errType: Error` and `errMessage: Simulated unexpected database failure`. The real cause is kept in the logs for developers, along with the full stack trace.
+
+![Structured Pino log for the unexpected error](screenshots/nestjs-logging-500-error-log.png)
+
+- **Result:** unexpected errors are caught by the global exception filter. The client gets a safe, consistent `500` response, and developers get a structured log with the real error details.
+
 ## Reflection
 
 This issue helped me understand how structured logging and global exception handling improve the maintainability and debugging of a NestJS application. I learned how `nestjs-pino` provides structured logs that are easier to search and analyse, and how configurable log levels help manage application logging.

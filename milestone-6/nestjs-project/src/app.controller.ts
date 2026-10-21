@@ -12,6 +12,12 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  // Throws a plain Error (not an HttpException) to test how unexpected errors are handled.
+  @Get('error-test')
+  throwUnexpectedError() {
+    throw new Error('Simulated unexpected database failure');
+  }
+
   @Get('admin')
   @UseGuards(Auth0RolesGuard)
   @Roles('admin')
