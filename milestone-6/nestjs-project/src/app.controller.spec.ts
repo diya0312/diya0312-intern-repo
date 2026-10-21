@@ -19,4 +19,18 @@ describe('AppController', () => {
       expect(appController.getHello()).toBe('Hello World!');
     });
   });
+
+  describe('error-test', () => {
+    it('throws a plain Error so the global filter turns it into a 500', () => {
+      expect(() => appController.throwUnexpectedError()).toThrow(
+        'Simulated unexpected database failure',
+      );
+    });
+  });
+
+  describe('admin', () => {
+    it('returns the admin welcome message (the guard is tested separately)', () => {
+      expect(appController.getAdminMessage()).toEqual({ message: 'Welcome, admin!' });
+    });
+  });
 });
