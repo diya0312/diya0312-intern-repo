@@ -17,6 +17,8 @@ import { AppService } from './app.service';
 import { CliDemoModule } from './cli-demo/cli-demo.module';
 import { TasksModule } from './tasks/tasks.module';
 import { LoggingMiddleware } from './middleware/logging.middleware';
+import { RequestInspectionModule } from './request-inspection/request-inspection.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -69,6 +71,8 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     TasksModule,
     CliDemoModule,
     TypeormTasksModule,
+    RequestInspectionModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, HttpExceptionFilter],
