@@ -1,0 +1,25 @@
+meta {
+  name: Profile - With Token
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/auth/profile
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+tests {
+  test("status is 200 with a valid Auth0 token", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+
+  test("returns the authenticated user", function () {
+    expect(res.getBody().user.userId).to.be.a("string");
+  });
+}

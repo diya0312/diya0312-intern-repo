@@ -1,0 +1,27 @@
+meta {
+  name: Create Task - Invalid
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/tasks
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": ""
+  }
+}
+
+tests {
+  test("status is 400", function () {
+    expect(res.getStatus()).to.equal(400);
+  });
+
+  test("explains the validation error", function () {
+    expect(res.getBody().message).to.include("title should not be empty");
+  });
+}

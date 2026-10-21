@@ -1,0 +1,28 @@
+meta {
+  name: Create Task
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/tasks
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Plan my focus session"
+  }
+}
+
+tests {
+  test("status is 201", function () {
+    expect(res.getStatus()).to.equal(201);
+  });
+
+  test("returns the new task", function () {
+    expect(res.getBody().title).to.equal("Plan my focus session");
+    expect(res.getBody().id).to.be.a("number");
+  });
+}

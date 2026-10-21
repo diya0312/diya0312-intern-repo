@@ -1,0 +1,37 @@
+meta {
+  name: Echo With Headers
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/inspect/echo
+  body: json
+  auth: none
+}
+
+headers {
+  X-Client: Bruno
+  X-Request-Purpose: header-demo
+}
+
+body:json {
+  {
+    "title": "Deep work",
+    "minutes": 45
+  }
+}
+
+tests {
+  test("status is 201", function () {
+    expect(res.getStatus()).to.equal(201);
+  });
+
+  test("server received the JSON body", function () {
+    expect(res.getBody().received.minutes).to.equal(45);
+  });
+
+  test("interceptor added debug headers", function () {
+    expect(res.getHeader("x-inspected-by")).to.equal("ResponseInspectionInterceptor");
+  });
+}
