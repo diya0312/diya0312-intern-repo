@@ -67,6 +67,37 @@ Background task
 
 ![BullMQ retry behavior](screenshots/bullmq-retry.png)
 
+- **What this screenshot shows:** job `2` (`failing-job`) was picked up by the worker 3 times, with "Processing job 2" printed once for each attempt.
+
+### Failed Job Test: Final Outcome
+
+- To make the retry result clearer, I added a `failed` event handler (`@OnWorkerEvent('failed')`) to the processor.
+- It prints the attempt number and whether BullMQ will retry or give up.
+
+![Failed event handler in the processor](screenshots/bullmq-failed-event-handler.png)
+
+- I then sent a new request to `POST /background-jobs/fail`.
+- The API replied straight away with job `1`, configured with `attempts: 3` and a fixed backoff of `1000ms`.
+
+![Failing job added to the queue](screenshots/bullmq-failing-job-request.png)
+
+- **What the server log shows:**
+  - Attempt 1/3 failed → BullMQ waited 1 second and retried.
+  - Attempt 2/3 failed → BullMQ waited 1 second and retried.
+  - Attempt 3/3 failed → no retries left, so the job was moved to the **failed** state.
+- **Retries that actually happened:** 3 attempts in total (1 first try + 2 retries).
+- **Final outcome:** the job **failed permanently**. It will not run again unless it is retried manually.
+
+![Retry attempts and final failure in the server log](screenshots/bullmq-retry-attempts-log.png)
+
+- **Checked inside Redis:**
+  - Job `1` is in the `bull:background-jobs:failed` set.
+  - `atm` (attempts made) is `3`.
+  - `failedReason` is `Simulated background job failure`.
+  - The stored options confirm `attempts: 3` and a `fixed` backoff of `1000ms`.
+
+![Failed job state stored in Redis](screenshots/bullmq-failed-job-redis.png)
+
 ## Why Background Jobs?
 
 - Long-running work can slow down API requests if handled directly.
@@ -95,3 +126,4 @@ Background task
 - **Personal observations:**
   - During testing, I observed that the API returned a job ID before the background task finished processing.
   - I also learned how retries help handle temporary failures and why retry limits are useful.
+  - In my failing-job test, the job ran 3 times with a 1-second gap between attempts. After the 3rd failure it stopped retrying and stayed in the failed list in Redis, which shows the retry limit working.

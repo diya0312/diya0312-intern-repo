@@ -1,4 +1,4 @@
-import { Processor, WorkerHost } from '@nestjs/bullmq';
+import { OnWorkerEvent, Processor, WorkerHost } from '@nestjs/bullmq';
 import { Job } from 'bullmq';
 
 @Processor('background-jobs')
@@ -18,5 +18,16 @@ export class BackgroundJobProcessor extends WorkerHost {
     console.log(`Completed job ${job.id}`);
 
     return `Processed ${job.name}`;
+  }
+
+  @OnWorkerEvent('failed')
+  onFailed(job: Job, error: Error) {
+    const maxAttempts = job.opts.attempts ?? 1;
+    const isFinal = job.attemptsMade >= maxAttempts;
+
+    console.log(
+      `Job ${job.id} failed on attempt ${job.attemptsMade}/${maxAttempts}: ${error.message}` +
+        (isFinal ? ' -> no retries left, job moved to failed state' : ' -> will retry'),
+    );
   }
 }
