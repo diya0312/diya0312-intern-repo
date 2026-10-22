@@ -99,6 +99,31 @@
 
 - **Result:** unexpected errors are caught by the global exception filter. The client gets a safe, consistent `500` response, and developers get a structured log with the real error details.
 
+## Why Both `nestjs-pino` and the `LoggingInterceptor` Are Kept
+
+- The app has two request loggers, and keeping both is intentional:
+  - **`nestjs-pino` (`pino-http`)** logs every HTTP request automatically: method, URL, status code, response time and request id, with the `authorization` and `cookie` headers redacted. This is the main structured log for this issue.
+  - **`LoggingInterceptor`** was built in issue #39 (*NestJS Interceptors & Middleware*, milestone 7) as my interceptor example, and that approved issue's screenshots depend on it. It logs **inside** the route handler: how long the handler took and what it returned.
+- **The interceptor does not write separate, unstructured logs:**
+  - `main.ts` calls `app.useLogger(app.get(Logger))`, which makes Nest's `Logger` use `nestjs-pino`.
+  - So the interceptor's messages are written as **Pino JSON**, with `"context":"LoggingInterceptor"` and the **same request id** as the `pino-http` entry.
+  - Both entries can be filtered and matched by request id, so they read as one structured log, not as two separate logging systems.
+- **The two loggers record different information:**
+  - `pino-http`: the final HTTP status and total response time, including middleware and serialization.
+  - `LoggingInterceptor`: handler-level timing, plus the value the controller returned before it was sent, which helps when debugging a handler.
+- **About logging response bodies:**
+  - In this learning project, the responses are demo data (sample tasks, BullMQ job info) with no passwords, tokens or personal data, and the auth headers are redacted by Pino's `redact` setting.
+  - In production I would **not** log full response bodies. I'd log only the method, URL and timing, or switch the interceptor to `PinoLogger` at `debug` level, so sensitive data can't end up in the logs and the request isn't logged twice.
+
+![pino-http and LoggingInterceptor entries for the same request](screenshots/nestjs-logging-pino-and-interceptor.png)
+
+- **What the screenshot shows:** I sent one `GET /tasks` request and filtered the server log by its request id (`2`). All four entries are Pino JSON with the same id:
+  - `LoggingMiddleware`: the middleware from issue #39, logged before the route runs
+  - `LoggingInterceptor`: `Request: GET /tasks`
+  - `LoggingInterceptor`: `Response: GET /tasks - 1ms - [...]`, the handler time and returned data
+  - `pino-http`: `request completed`, with `statusCode: 200` and `responseTime: 3`
+- This shows the interceptor logs go through `nestjs-pino` and are linked to the `pino-http` entry by request id, so they add handler-level detail instead of a second, disconnected log.
+
 ## Reflection
 
 This issue helped me understand how structured logging and global exception handling improve the maintainability and debugging of a NestJS application. I learned how `nestjs-pino` provides structured logs that are easier to search and analyse, and how configurable log levels help manage application logging.
