@@ -269,3 +269,96 @@ I also experienced a real merge conflict earlier in Milestone 1, which helped me
 I learned that branches provide a safer way to work on changes without directly affecting `main`. They allow developers to keep their work separate, make commits independently, and have changes reviewed before they are integrated into the main codebase.
 
 I also learned that working on separate branches does not automatically prevent conflicts. If multiple developers change the same part of a file, Git may require the conflicting changes to be resolved manually.
+
+---
+
+# Creating & Reviewing Pull Requests
+
+**Milestone:** 3  
+**Issue Number:** #63  
+**Date:** 23/10/2026
+
+## What Is a Pull Request (PR) and Why Is It Used?
+
+- A Pull Request asks to merge changes from one branch into another, e.g. `feature/...` → `develop`, or `develop` → `main`.
+- It's a place to **review** changes before they reach the main code:
+  - teammates can see every changed file (the diff), comment on specific lines, and approve or request changes
+  - automated checks (CI) can run on the changes
+- After approval, the PR is merged, and its history (discussion, reviews, commits) stays as a record of **why** the change was made.
+
+## My Pull Requests (Academic Team Project)
+
+- I created and worked with pull requests in my academic team project, **Academic Performance Analytics System (Insight24)**, a private repository in my university's GitHub organisation.
+- In that organisation I use my **university GitHub account, `PES2UG23CS183`**, so in the screenshots below the PRs are opened and merged by **PES2UG23CS183**, which is me.
+- I worked in a team of six. We used **feature branches → `develop` → `main`**, and every merge went through a PR.
+- I authored **9 pull requests** in this project (7 closed, 2 open).
+
+![My pull requests in the academic project](screenshots/pr-academic-authored-prs.png)
+
+## Opening a PR and Requesting Feedback
+
+- **PR #19: "Merging modified develop into main"**
+  - Merges **32 commits** from `develop` into `main` (19 files changed).
+  - The changes included backend input validators, logging, rate limiting, crypto unit tests, backend integration tests, and pytest/coverage setup.
+  - **Description:** "Added validation, integration, systems testing."
+- **Requesting feedback:** I requested reviews from all **6 teammates**. They show in the **Reviewers** panel.
+
+![PR #19 with reviewers requested](screenshots/pr-feedback-reviewers-requested.png)
+
+## Feedback, Approval and Merge
+
+- **pes2ug23cs188-oss** approved the changes.
+- **pes2ug23cs169** approved the changes and commented **"GO ahead and merge"**.
+- After the approvals, **I merged the PR** into `main` on 16 Nov 2025.
+- GitHub showed "Pull request successfully merged and closed".
+
+![Approvals, reviewer comment and merge](screenshots/pr-feedback-approved-and-merged.png)
+
+- **Another of my PRs, #16** (`feature/EPIC5_EPIC6` → `develop`: "Backend Enhancements, Validators Fix, and Test Suite Integration"), followed the same flow. It had a description of the changes, was approved by pes2ug23cs188-oss with the comment "Approving Changes", and was then merged.
+
+## What I Would Do Differently
+
+- **Delete the branch after merging:** after #16 was merged, the `feature/EPIC5_EPIC6` branch was **not deleted**; GitHub still shows the "Delete branch" button. Deleting merged feature branches keeps the repository clean and shows the work is finished. `develop` (from #19) is a long-lived branch, so it's normal to keep it.
+- **Link the PR to an issue:** these PRs weren't linked to issues. Next time I'll add `Closes #<issue>` (or "Related to #<issue>") in the description, so the PR and the task are connected.
+- **Don't merge with failing checks:** #19 was merged with "0 of 2 checks passed". In a real team, failing CI checks should be fixed (or explained) before merging, even if reviewers approved.
+
+## Reviewing an Open-Source PR: React #37580
+
+- **PR:** [facebook/react #37580: "[DOM] Stop emulating bubbling for toggle and beforetoggle events"](https://github.com/facebook/react/pull/37580)
+- **What it changed:**
+  - `toggle` and `beforetoggle` events (from `<details>`, `<dialog>` and popovers) don't bubble in the browser, but React was still running parent `onToggle` handlers.
+  - The fix treats them like `scroll` (non-bubbling) and updates the tests.
+- **How it was reviewed:**
+  - The author wrote a clear description with **Summary, Root cause, Fix, Tests** and a **Test plan** (commands run and their results), and linked the bug it fixes ("Fixes #22718").
+  - A bot asked the author to sign the **Contributor License Agreement** before the PR could be merged.
+  - Reviewer **eps1lon** first said the fix was right, but asked the author **not to restructure the existing tests**, to "keep the git-blame intact", and to follow the current test pattern instead.
+  - The reviewer formally **requested changes**, left a line comment on a test file ("This should be updated"), and then **approved** once the author updated the PR.
+  - The reviewer also explained the decision: it's treated as a **bug fix** because the event is new, while similar older events can only change in a major release.
+  - The PR was merged a few days later.
+
+![React PR #37580](screenshots/pr-review-react-37580.png)
+
+## Reflection
+
+### Why are PRs important in a team workflow?
+
+- They stop unreviewed code going straight into `main`, so **at least one other person checks every change**.
+- Everyone can see what's changing and **discuss it in one place**, which matters a lot in a team of six like mine.
+- Approvals and CI checks act as **quality gates** before merging.
+- The PR history explains **why** a change was made, which helps later when debugging or onboarding.
+
+### What makes a well-structured PR?
+
+- A **clear title** that says what the PR does, e.g. "Stop emulating bubbling for toggle events", not "Develop" or "patch 2".
+- A **description** with: what changed, **why** (the root cause), how it was **tested**, and a **link to the issue** ("Fixes #...").
+- **Small and focused:** one feature or fix. My #19 merged 32 commits at once, which is much harder to review than a small PR.
+- **Passing checks** and **reviewers requested** (the right people, e.g. code owners).
+- Following the **existing style and patterns** of the codebase, as the React reviewer asked.
+
+### What did I learn from reviewing an open-source PR?
+
+- **Reviews are about the whole codebase, not just "does it work".** The React reviewer accepted the fix but asked to keep the existing test structure, so git history (`git blame`) stays useful for everyone.
+- **Good PR descriptions make reviews fast.** The author's root cause, fix and test plan made it easy to understand and approve.
+- **The flow is "comment → request changes → update → approve"**, and that's normal and positive. It's not a rejection.
+- **Large projects have extra gates**, like the CLA bot and hundreds of CI checks, before anything can be merged.
+- Comparing it with my own PRs showed me what to improve: **smaller PRs, linked issues, passing checks, and deleting branches after merging**.
