@@ -70,9 +70,12 @@
 
 - `Profile - With Token` uses Bruno's **Bearer auth**: `auth: bearer` with `token: {{accessToken}}`.
 - Bruno adds the `Authorization: Bearer <token>` header for me.
-- The real token comes from Auth0 (see issue #31). I passed it in when running, so it's never saved in the collection:
-  - `bru run "Auth/Profile - With Token.bru" --env Local --env-var accessToken=<token>`
-- **Result:** `200`, and the response contained the authenticated user.
+- The real token comes from my Auth0 tenant (see issue #31). I loaded it from a file outside the repo and passed it in when running, so it's never saved in the collection:
+  - `$token = Get-Content C:\Users\diyab\auth0-token.txt`
+  - `bru run "Auth/Profile - No Token.bru" "Auth/Profile - With Token.bru" --env Local --env-var accessToken=$token`
+- **Result: 2 requests passed, 3/3 tests passed.**
+  - `Profile - No Token` → `401 Unauthorized`
+  - `Profile - With Token` → `200 OK`, and the response contained the authenticated user
 
 ![Bearer auth request using the accessToken variable](screenshots/bruno-bearer-auth.png)
 
